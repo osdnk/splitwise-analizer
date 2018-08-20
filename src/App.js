@@ -26,12 +26,24 @@ class App extends Component {
   drawInput = () => {
     this.setState({
       showInput: !this.state.showInput
+    }, () => {
+      if (!this.state.showInput) {
+        this.setState({
+          showInput: true
+        });
+      }
     })
   };
 
   drawResult = () => {
     this.setState({
       showResult: !this.state.showResult
+    }, () => {
+      if (!this.state.showResult) {
+        this.setState({
+          showResult: true
+        });
+      }
     })
   };
 
@@ -73,9 +85,11 @@ class App extends Component {
       ({
         source: `n${d.from}`,
         target: `n${d.to}`,
-        label: `${d.sum}`,
+        label: `from ${d.from} to ${d.to} - ${d.sum} USD`,
         id: `e${i}`,
-        weight: 3
+        size: 20, //here put a value that you want
+        color: '#2e2e2e',
+        type:'arrow'
       })
     )
     return {
@@ -96,9 +110,9 @@ class App extends Component {
     </div>
 
   renderChart = input => {
-    return <Sigma graph={this.parseData(input)} settings={{ drawEdges: true, clone: true, drawEdgeLabels: true }}>
-      <EdgeShapes default="arrow"/>
-      <RelativeSize initialSize={15}/>
+    return <Sigma renderer="canvas" graph={this.parseData(input)} settings={{ drawEdges: true, drawEdgeLabels: true }}>
+      <EdgeShapes default="curvedArrow"/>
+      <RelativeSize initialSize={1}/>
       <RandomizeNodePositions/>
     </Sigma>
   }
